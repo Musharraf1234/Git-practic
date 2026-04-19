@@ -3,13 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>git restore </title>
+    <title>Virtura - VR Landing Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-purple: #9000ff;
+            --dark-bg: #0d001a;
+            --text-light: #f0f0f0;
+            --text-dim: #b3b3b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+            /* Creating the complex purple gradient background */
+            background: 
+                radial-gradient(circle at 50% 60%, rgba(180, 0, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(144, 0, 255, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 10% 20%, rgba(50, 0, 100, 0.5) 0%, transparent 40%),
+                #0d001a;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .nav-links a.active, .nav-links a:hover {
+            color: #d400ff;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: white;
+            text-transform: lowercase;
+        }
+
+        .logo::first-letter {
+            text-transform: uppercase;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            line-height: 1.2;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 2px;
+            z-index: 2;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .highlight {
+            color: #5500ff;
+            text-shadow: 0 0 20px rgba(85, 0, 255, 0.8);
+        }
+
+        /* Main Content Grid Area */
+        .hero-content {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 500px;
+            margin-top: 2rem;
+        }
+
+        /* Center Image */
+        .center-image {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 450px;
+            height: 550px;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* Background glow behind person */
+        .center-image::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: -1;
+            box-shadow: 0 0 50px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .center-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            /* Placeholder for the VR person */
+        }
+
+        /* Left Content Elements */
+        .left-content {
+            position: absolute;
+            left: 5%;
+            top: 20%;
+            text-align: left;
+            max-width: 300px;
+            z-index: 10;
+        }
+
+        .left-content p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary-purple);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(144, 0, 255, 0.6);
+        }
+
+        .cta-btn .arrow-icon {
+            background: white;
+            color: var(--primary-purple);
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        /* Floating 3D Object Placeholder (Left) */
+        .floating-obj-left {
+            position: absolute;
+            left: 10%;
+            bottom: 10%;
+            width: 80px;
+            height: auto;
+            z-index: 4;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Right Content Elements */
+        .right-content {
+            position: absolute;
+            right: 5%;
+            top: 10%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            z-index: 10;
+        }
+
+        /* The Stats Pill */
+        .stats-pill {
+            background: white;
+            color: black;
+            border-radius: 50px;
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+            width: 120px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: float 5s ease-in-out infinite alternate;
+        }
+
+        /* Floating sphere above stats pill */
+        .stats-pill::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #ff99cc, #b300ff);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(179, 0, 255, 0.5);
+        }
+
+        .stats-pill h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .stats-pill p {
+            font-size: 0.6rem;
+            color: #666;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .try-now-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: -15px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .black-btn-circle {
+            background: black;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+        /* Bottom Right Text */
+        .bottom-right-text {
+            position: absolute;
+            right: 5%;
+            bottom: 5%;
+            max-width: 300px;
+            text-align: left;
+            z-index: 10;
+        }
+
+        .bottom-right-text p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            h1 { font-size: 2.5rem; }
+            .hero-content { display: flex; flex-direction: column; align-items: center; height: auto; }
+            .left-content, .right-content, .bottom-right-text { position: relative; left: auto; right: auto; top: auto; bottom: auto; text-align: center; margin: 2rem 0; align-items: center;}
+            .center-image { position: relative; transform: none; left: auto; width: 100%; max-width: 350px; margin: 0 auto;}
+            nav { flex-direction: column; gap: 1rem; }
+        }
+    </style>
 </head>
 <body>
-    <h1>GIT RESTORE</h1>
-    <h1>GIT RESTORE</h1>
-    <h1>GIT RESTORE</h1>
-    <h1>GIT RESTORE</h1>
-    <h1>GIT RESTORE</h1>
+
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#" class="active" style="color: #d400ff;">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Products</a></li>
+        </ul>
+        <div class="logo">Virtura</div>
+        <ul class="nav-links">
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Blogs</a></li>
+        </ul>
+    </nav>
+
+    <main class="hero">
+        <h1>EXPERIENCE THE<br>FUTURE WITH <span class="highlight">UR</span></h1>
+        
+        <div class="hero-content">
+            
+            <div class="left-content">
+                <p>Elementum augue ut sagittis nuncy.<br>Posuere id velit integer proin aliquam<br>facilisi quis et cras aliqitisina.</p>
+                <button class="cta-btn">
+                    Get a Demo <span class="arrow-icon">→</span>
+                </button>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="VR Headset" class="floating-obj-left" style="border-radius: 20px; mix-blend-mode: screen;">
+
+            <div class="center-image">
+                <img src="https://cdn.pixabay.com/photo/2022/01/24/18/06/virtual-reality-6964346_960_720.png" alt="Woman experiencing VR">
+            </div>
+
+            <div class="right-content">
+                <div class="stats-pill">
+                    <h3>600k +</h3>
+                    <p>Active User</p>
+                    <div class="try-now-text">Try Now</div>
+                    <div class="black-btn-circle">></div>
+                </div>
+            </div>
+
+            <div class="bottom-right-text">
+                <p>Elementum augue ut sagittis nuncy.<br>Posuere id velit integer proin aliquam<br>facilisi quis et cras aliqitisina. velit<br>integer proin sagittis.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Optional: Add simple interactivity or parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const centerImage = document.querySelector('.center-image');
+            const floatingLeft = document.querySelector('.floating-obj-left');
+            const statsPill = document.querySelector('.stats-pill');
+
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+
+            centerImage.style.transform = `translateX(-50%) translate(${xAxis}px, ${yAxis}px)`;
+            floatingLeft.style.transform = `translate(${xAxis * 1.5}px, ${yAxis * 1.5}px)`;
+            statsPill.style.transform = `translate(${xAxis * -1}px, ${yAxis * -1}px)`;
+        });
+    </script>
 </body>
 </html>
