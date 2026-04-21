@@ -1155,6 +1155,7 @@ function startCountdown() {
       document.getElementById('cd-days').textContent = '00';
       document.getElementById('cd-hours').textContent = '00';
       document.getElementById('cd-mins').textContent = '00';
+        document.getElementById('cd-mins').textContent = '00';
       return;
     }
     const d = Math.floor(diff / 86400000);
@@ -1182,7 +1183,7 @@ function initReveal() {
 
 /* ─── RSVP ─── */
 function submitRsvp() {
-  document.getElementById('rsvp-form').style.display ='none';
+  document.getElementById('rsvp-form').style.display = 'none';
   document.getElementById('rsvp-thanks').style.display = 'block';
 }
 </script>
